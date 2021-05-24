@@ -22,5 +22,11 @@ def userConnect():
 def userDisconnect():
     emit('userDisconnect', broadcast=True)
 
+# CUSTOM EVENTS
+
+@socketio.on('titleChange')
+def titleChange(name):
+    emit('changeTitle', name, broadcast=True)
+
 if __name__ == "__main__":
     socketio.run(app)

@@ -56,8 +56,23 @@ body {
 .navbar .name-container #group-name {
   font-size: 13pt;
   font-weight: 200;
-  border-left: 2px solid var(--stroke-color);
+  color: white;
   padding: 4px 16px;
+  outline: none;
+  border: none;
+  border-left: 2px solid var(--stroke-color);
+  padding: 10px 15px;
+}
+
+.navbar .name-container input {
+  border-radius: 25px;
+  background-color:#0e0f10;
+  font-family: 'Segoe UI';
+  font-size: 13pt;
+  font-weight: 200;
+  width: fit-content;
+  width: 100%;
+  border: 2px solid var(--background-2) !important;
 }
 
 .userlist-container {
@@ -123,11 +138,6 @@ body {
   height: 50px;
   align-self: flex-start;
   clip-path: circle(50% at 50% 50%);
-}
-
-.main-container .tchat .message p {
-  margin: 0;
-  margin-top: 10px;
 }
 
 .main-container .tchat .message .message-infos {
