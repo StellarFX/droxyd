@@ -9,8 +9,10 @@
     integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script type="text/javascript" src="{{ url_for('static', filename = 'index.js') }}"></script>
+  <!--<script type="text/javascript" src="{{ url_for('static', filename = 'index.js') }}"></script>-->
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'index.css') }}">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
   <title>Droxyd</title>
 </head>
 
@@ -26,18 +28,29 @@
       <p id="group-name">Nouveau groupe</p>
     </div>
   </div>
-  <div class="userlist-container">
-    <div class="user">
-      <img src="{{ url_for('static', filename = 'user-logo.jpg') }}">
-      <p>User</p>
+  <div class="main-container">
+    <div class="userlist-container">
+      <div class="user">
+        <img src="{{ url_for('static', filename = 'user-logo.jpg') }}">
+        <p>User</p>
+      </div>
+      <div class="user">
+        <img src="{{ url_for('static', filename = 'user-logo.jpg') }}">
+        <p>User</p>
+      </div>
     </div>
-  </div>
-  <div class="tchat">
-    <div class="message">
-      <img src="{{ url_for('static', filename = 'user-logo.jpg') }}">
-      <p id="tchat-user">User</p>
-      <p id="time">00:00</p>
-      <p id="message">Hello World!</p>
+    <div class="tchat">
+      <div class="message">
+        <img src="{{ url_for('static', filename = 'user-logo.jpg') }}">
+        <div class="message-infos">
+          <div class="user-info">
+            <span class="msg-user">User</span>
+            <span>00:00</span>
+          </div>
+          <p id="message">Hello World!</p>
+        </div>
+        
+      </div>
     </div>
   </div>
   <div class="userbar">
@@ -46,7 +59,9 @@
       <p id="username">User</p>
     </div>
     <div class="messagebar">
-      <input type="text" placeholder="Écrivez un message">
+      <div class="userinput">
+        <input type="text" placeholder="Écrivez un message">
+      </div>
     </div>
   </div>
 </body>

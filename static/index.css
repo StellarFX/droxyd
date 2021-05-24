@@ -1,3 +1,207 @@
-p {
-  color: aqua;
+:root {
+  --background-1: #161719;
+  --background-2: #1f2022;
+  --background-3: #2d2e31;
+  --background-msg-usr: #292a2d;
+  --main-color: #983aef;
+  --stroke-color: #42444b;
+}
+
+body {
+  margin: 0;
+  box-sizing: border-box;
+  height: 100vh;
+  background-color: var(--background-3);
+  color: white;
+  font-size: 130%;
+  font-family: 'Segoe UI';
+  display: flex;
+  flex-direction: column;
+  /*overflow: hidden; REMOVE WHEN PROD*/
+  height: 100vh;
+}
+
+.navbar {
+  background-color: var(--background-1);
+  width: 100%;
+  height: 80px;
+  box-shadow: 0px 6px 9px 2px rgba(0, 0, 0, 0.25);
+  display: flex;
+}
+
+.navbar .title-container {
+  height: 100%;
+  width: 15%;
+  display: flex;
+  align-items: center;
+  padding-left: 50px;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+  font-size: 18pt;
+  min-width: 200px;
+}
+
+.navbar .title-container img {
+  height: 60%;
+  margin-right: 15px;
+}
+
+.navbar .name-container {
+  display: flex;
+  align-items: center;
+  padding-left: 40px;
+}
+
+.navbar .name-container #group-name {
+  font-size: 13pt;
+  font-weight: 200;
+  border-left: 2px solid var(--stroke-color);
+  padding: 4px 16px;
+}
+
+.userlist-container {
+  height: 100%;
+  width: 15%;
+  min-width: 200px;
+  background-color: var(--background-2);
+  display: flex;
+  padding: 40px 0;
+  padding-left: 50px;
+  box-sizing: border-box;
+  flex-direction: column;
+}
+
+.userlist-container .user {
+  display: flex;
+  align-items: center;
+  height: min-content;
+  font-weight: 300;
+  font-family: 'Montserrat', sans-serif;
+  width: 70%;
+  border-bottom: 1px solid var(--background-3);
+  padding: 10px 0;
+}
+
+.userlist-container .user:last-child {
+  border-bottom: none;
+}
+
+.userlist-container .user img {
+  height: 50px;
+  margin-right: 15px;
+  clip-path: circle(50% at 50% 50%);
+}
+
+.main-container {
+  display: flex;
+  min-height: calc(100vh - 100px - 80px);
+}
+
+.main-container .tchat {
+  width: calc(100% - 15%);
+  height: 100%;
+  padding: 30px 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.main-container .tchat .message {
+  display: flex;
+  align-items: center;
+  height: min-content;
+  width: 100%;
+  padding: 10px;
+}
+
+.main-container .tchat .message:hover {
+  background-color: var(--background-msg-usr);
+}
+
+.main-container .tchat .message img {
+  height: 50px;
+  align-self: flex-start;
+  clip-path: circle(50% at 50% 50%);
+}
+
+.main-container .tchat .message p {
+  margin: 0;
+  margin-top: 10px;
+}
+
+.main-container .tchat .message .message-infos {
+  margin-left: 15px;
+}
+
+.main-container .tchat .message .message-infos p {
+  font-family: 'Segoe UI';
+  font-weight: 100;
+  font-size: 12pt;
+}
+
+.main-container .tchat .message .message-infos .user-info {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+}
+
+.main-container .tchat .message .message-infos .user-info span:last-child {
+  font-size: 10pt;
+  color: var(--stroke-color);
+}
+
+.userbar {
+  width: 100%;
+  height: 100px;
+  display: flex;
+  background-color: var(--background-1);
+}
+
+.userbar .userinfo {
+  height: 100%;
+  width: 15%;
+  display: flex;
+  align-items: center;
+  padding-left: 50px;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+  font-size: 18pt;
+  min-width: 200px;
+}
+
+.userbar .userinfo img {
+  height: 60%;
+  margin-right: 20px;
+  clip-path: circle(50% at 50% 50%);
+}
+
+.userbar .messagebar {
+  display: flex;
+  align-items: center;
+  padding: 0 25px;
+  width: 85%;
+  box-sizing: border-box;
+}
+
+.userbar .messagebar .userinput {
+  width: 100%;
+  padding: 12px 18px;
+  border-radius: 25px;
+  border: 3px solid var(--background-2);
+  display: flex;
+}
+
+.userbar .messagebar .userinput input {
+  width: 100%;
+  padding-left: 12px;
+  height: 100%;
+  border: none;
+  outline: none;
+  background-color: var(--background-1);
+  font-size: 18px;
+  border-left: 2px solid var(--stroke-color);
+  color: white;
+  font-weight: 300;
+  font-family: 'Segoe UI';
 }
