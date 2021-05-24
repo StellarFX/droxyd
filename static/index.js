@@ -10,25 +10,19 @@ function spanSwitch(e) {
 
 function spanReset(e) {
     let txt = e.value;
-    if(e.value == "") {
+    if (e.value == "") {
         txt = "Groupe sans nom";
     }
-    let element = $(".name-container");
 
     socket.emit('titleChange', { data: txt });
-    element[0].innerHTML = `<p id="group-name" onclick='spanSwitch(this)'> ${txt} </span>`;
 }
 
 $(() => {
 
-    $("#form").on('submit', (e) => {
-
-        e.preventDefault();
-
-        var username = $('#username').val();
-
-        return socket.emit('name', { data: username });
-
+    $(document).on('keydown', '#group-name', function(e) {
+        if (e.key == "Enter") {
+            spanReset($('#group-name'))
+        }
     })
 
     /*socket.on('userConnect', () => {
@@ -46,7 +40,7 @@ $(() => {
     socket.on('changeTitle', (name) => {
         let element = $(".name-container");
 
-        element[0].innerHTML = `<p id="group-name" onclick='spanSwitch(this)'> ${txt["data"]} </span>`;
+        element[0].innerHTML = `<p id="group-name" onclick='spanSwitch(this)'> ${name["data"]} </span>`;
     })
 
 })

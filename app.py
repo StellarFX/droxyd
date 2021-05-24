@@ -6,6 +6,8 @@ app.config['SECRET_KEY'] = 'secret!'
 
 socketio = SocketIO(app)
 
+title = {"data": "Nouveau groupe"}
+
 @app.route('/')
 def setupPage():
     return render_template('login.html')
@@ -17,6 +19,7 @@ def nameHandler(json):
 @socketio.on('connect')
 def userConnect():
     emit('userConnect', broadcast=True)
+    emit('changeTitle', title)
 
 @socketio.on('disconnect')
 def userDisconnect():
@@ -26,7 +29,9 @@ def userDisconnect():
 
 @socketio.on('titleChange')
 def titleChange(name):
-    emit('changeTitle', name, broadcast=True)
+    global title
+    title = name
+    emit('changeTitle', title, broadcast=True)
 
 if __name__ == "__main__":
     socketio.run(app)
