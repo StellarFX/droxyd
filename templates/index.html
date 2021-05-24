@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"
+    integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename = 'index.js') }}"></script>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'index.css') }}">
+  <title>Droxyd</title>
+</head>
+
+<body>
+  <div id="connectlist">
+  </div>
+  <div class="navbar">
+    <div class="title-container">
+      <img src="{{ url_for('static', filename = 'logo.jpg') }}">
+      <p>Droxyd</p>
+    </div>
+    <div class="name-container">
+      <p id="group-name">Nouveau groupe</p>
+    </div>
+  </div>
+  <div class="userlist-container">
+    <div class="user">
+      <img src="{{ url_for('static', filename = 'user-logo.jpg') }}">
+      <p>User</p>
+    </div>
+  </div>
+  <div class="tchat">
+    <div class="message">
+      <img src="{{ url_for('static', filename = 'user-logo.jpg') }}">
+      <p id="tchat-user">User</p>
+      <p id="time">00:00</p>
+      <p id="message">Hello World!</p>
+    </div>
+  </div>
+  <div class="userbar">
+    <div class="userinfo">
+      <img src="{{ url_for('static', filename = 'user-logo.jpg') }}">
+      <p id="username">User</p>
+    </div>
+    <div class="messagebar">
+      <input type="text" placeholder="Écrivez un message">
+    </div>
+  </div>
+</body>
+
+</html>
