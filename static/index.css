@@ -5,6 +5,9 @@
   --background-msg-usr: #292a2d;
   --main-color: #983aef;
   --stroke-color: #42444b;
+  --true: #7aff70;
+  --false: #ff7073;
+  --neutral: #767779;
 }
 
 body {
@@ -97,17 +100,17 @@ body {
   width: fit-content;
 }
 
-.userlist-container::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
   /*-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);*/
   background-color: #242527;
 }
 
-.userlist-container::-webkit-scrollbar {
+::-webkit-scrollbar {
   width: 12px;
   background-color: #F5F5F5;
 }
 
-.userlist-container::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
   border-radius: 10px;
   -webkit-box-shadow: inset 0 0 6px rgb(0 0 0 / 0.4);
   box-shadow: inset 0 0 6px rgb(0 0 0 / 0.4);
@@ -129,19 +132,6 @@ body {
   border-bottom: none;
 }
 
-.userlist-container .user .icon {
-  margin-right: 15px;
-  clip-path: circle(50% at 50% 50%);
-  /*background-color:red;*/
-  width: 5vh;
-  min-width: 5vh;
-  height: 5vh;
-  display: flex;
-  align-items: center;
-  font-size: 1.2rem;
-  justify-content: center;
-}
-
 .userlist-container .user p {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -160,6 +150,7 @@ body {
   box-sizing: border-box;
   display: flex;
   flex-direction: column-reverse;
+  overflow: auto;
 }
 
 .main-container .tchat .message {
@@ -174,10 +165,9 @@ body {
   background-color: var(--background-msg-usr);
 }
 
-.main-container .tchat .message img {
-  height: 50px;
+.main-container .tchat .message .icon {
+  margin-right: 0;
   align-self: flex-start;
-  clip-path: circle(50% at 50% 50%);
 }
 
 .main-container .tchat .message .message-infos {
@@ -201,6 +191,28 @@ body {
   color: var(--stroke-color);
 }
 
+.main-container .tchat .notification {
+  color: var(--neutral); 
+  padding-top: 0; 
+  padding-bottom: 0;
+}
+
+.main-container .tchat #join .icon {
+  color: var(--true);
+}
+
+.main-container .tchat #leave .icon {
+  color: var(--false);
+}
+
+.main-container .tchat #rename-user .icon {
+  color: var(--neutral);
+}
+
+.main-container .tchat #rename-group .icon {
+  color: var(--neutral);
+}
+
 .userbar {
   width: 100%;
   height: 100px;
@@ -221,7 +233,7 @@ body {
   min-width: 200px;
 }
 
-.userbar .userinfo .icon {
+.icon {
   margin-right: 15px;
   clip-path: circle(50% at 50% 50%);
   width: 5vh;
@@ -240,8 +252,8 @@ body {
   padding: 10px 15px;
   box-sizing: border-box;
   overflow: hidden;
-  text-overflow: ellipsis;
   white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .userbar .userinfo input {
@@ -284,3 +296,4 @@ body {
   font-weight: 300;
   font-family: 'Segoe UI';
 }
+
