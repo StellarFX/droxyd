@@ -13,6 +13,7 @@
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'index.css') }}">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/b9e47788af.js" crossorigin="anonymous"></script>
   <title>Droxyd</title>
 </head>
 
@@ -25,19 +26,13 @@
       <p>Droxyd</p>
     </div>
     <div class="name-container">
-      <p onclick='spanSwitch(this)' id="group-name">Nouveau groupe</p>
+      <p onclick="spanSwitch(this, 'group-name');" id="group-name">Nouveau groupe</p>
     </div>
   </div>
   <div class="main-container">
     <div class="userlist-container">
-      <div class="user">
-        <img src="{{ url_for('static', filename = 'user-logo.jpg') }}">
-        <p>User</p>
-      </div>
-      <div class="user">
-        <img src="{{ url_for('static', filename = 'user-logo.jpg') }}">
-        <p>User</p>
-      </div>
+      <span class="secondary">Liste des utilisateurs :</span>
+      <!-- USER LIST -->
     </div>
     <div class="tchat">
       <div class="message">
@@ -49,18 +44,18 @@
           </div>
           <p id="message">Hello World!</p>
         </div>
-        
+
       </div>
     </div>
   </div>
   <div class="userbar">
     <div class="userinfo">
-      <img src="{{ url_for('static', filename = 'user-logo.jpg') }}">
-      <p id="username">User</p>
+      <div class="icon"><i class="fas fa-user"></i></div>
+      <p onclick='spanSwitch(this)' id="username">User</p>
     </div>
     <div class="messagebar">
       <div class="userinput">
-        <input type="text" placeholder="Écrivez un message">
+        <input type="text" id="user-input" placeholder="Écrivez un message">
       </div>
     </div>
   </div>

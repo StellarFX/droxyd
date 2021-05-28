@@ -1,10 +1,11 @@
 from flask import Flask, render_template
+from flask.globals import session
 from flask_socketio import SocketIO, emit
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'secret!'
-
 socketio = SocketIO(app)
+
+import sessionHandler
 
 title = {"data": "Nouveau groupe"}
 
@@ -16,14 +17,23 @@ def setupPage():
 def nameHandler(json):
     print(json)
 
+userList = {}
+
 @socketio.on('connect')
 def userConnect():
-    emit('userConnect', broadcast=True)
+    sessionHandler.setUID()
+    sessionHandler.setUsername()
+    sessionHandler.setUniqueColor()
+    userList[sessionHandler.getUID()] = [sessionHandler.getUsername(), sessionHandler.getUniqueColor()]
+    emit('userConnect', (sessionHandler.getUID(), sessionHandler.getUsername(), sessionHandler.getUniqueColor()), include_self=False, broadcast=True)
     emit('changeTitle', title)
+    emit('changeUserInfos', userList[sessionHandler.getUID()])
+    emit('loadUsers', (userList, sessionHandler.getUID()))
 
 @socketio.on('disconnect')
 def userDisconnect():
-    emit('userDisconnect', broadcast=True)
+    userList.pop(session['id'])
+    emit('userDisconnect', sessionHandler.getUID(), broadcast=True)
 
 # CUSTOM EVENTS
 
@@ -32,6 +42,18 @@ def titleChange(name):
     global title
     title = name
     emit('changeTitle', title, broadcast=True)
+
+@socketio.on('usernameChange')
+def changeUsername(name):
+    sessionHandler.setUsername(name)
+    userList[sessionHandler.getUID()] = [name, sessionHandler.getUniqueColor()]
+    emit('changeUsername', (name, sessionHandler.getUID()), include_self=False, broadcast=True)
+
+@socketio.on('message')
+def handleMessage(msg):
+    print(sessionHandler.getUsername())
+    # emit('newMessage', json, broadcast=True)
+    print(msg)
 
 if __name__ == "__main__":
     socketio.run(app)
