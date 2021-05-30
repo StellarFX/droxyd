@@ -3,6 +3,7 @@ from flask import Flask, render_template
 from flask.globals import session
 from flask_socketio import SocketIO, emit
 from colorsys import hls_to_rgb
+from time import strftime, localtime
 
 app = Flask(__name__)
 socketio = SocketIO(app)
@@ -76,8 +77,9 @@ messages = []
 
 @socketio.on('message')
 def handleMessage(msg):
-    messages.append((msg, sessionHandler.getUID(), userList[sessionHandler.getUID()][0], userList[sessionHandler.getUID()][1]))
-    emit('newMessage', (msg, userList[sessionHandler.getUID()], sessionHandler.getUID()), broadcast=True)
+    messageTime = strftime('%H:%M', localtime())
+    messages.append((msg, sessionHandler.getUID(), userList[sessionHandler.getUID()][0], userList[sessionHandler.getUID()][1], messageTime))
+    emit('newMessage', (msg, userList[sessionHandler.getUID()], sessionHandler.getUID(), messageTime), broadcast=True)
 
 if __name__ == "__main__":
     socketio.run(app)

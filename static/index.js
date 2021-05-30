@@ -43,9 +43,6 @@ function spanReset(e) {
      * @returns {JQuery<HTMLElement>}
      */
 function loadCustomMessage(message) {
-    let date = new Date();
-    let h = date.getHours().toString();
-    let m = date.getMinutes().toString();
     var message = $(`<div class="message" id="#user-${message[1]}">
         <div class="icon" style="background-color: ${message[3]}">
             <i class="fas fa-user"></i>
@@ -53,7 +50,7 @@ function loadCustomMessage(message) {
         <div class="message-infos">
             <div class="user-info">
                 <span class="msg-user">${message[2]}</span>
-                <span>${h}:${m}</span>
+                <span>${message[4]}</span>
             </div>
             <p class="message-text">${message[0]}</p>
         </div>
@@ -100,7 +97,6 @@ $(() => {
     $(document).on('keyup', '#user-input', (e) => {
         if (e.key == "Enter") {
             let message = $("#user-input").val();
-            console.log(message);
             socket.emit('message', message)
             $("#user-input").val('');
         }
@@ -125,15 +121,12 @@ $(() => {
      * Charge les utilisateurs présents lorsque l'utilisateur rejoint et les charge dans la liste des utilisateurs
      */
     socket.on('loadUsers', (userList, UID) => {
-        console.log(userList, UID);
         for (const [key, value] of Object.entries(userList)) {
             if (key == UID) {
                 continue;
             } else {
                 var user = $(`<div class="user" id="user-${key}"><div class="icon"><i class="fas fa-user"></i></div><p>${value[0]}</p></div>`);
                 $(".userlist-container").append(user);
-                console.log("uid " + key, "username " + value[0], "color " + value[1]);
-                console.log(".userlist-container")
                 $(`#user-${key} .icon`).css('background-color', `hsl(${value[1]},100%,72%)`);
             }
         }
@@ -159,7 +152,6 @@ $(() => {
      * Charge le nom d'utilisateur depuis le serveur.
      */
     socket.on('changeUsername', (name, id) => {
-        console.log(name)
         $(`#user-${id}`).children('p').text(name);
     })
 
@@ -174,10 +166,7 @@ $(() => {
     /**
      * S'active lors de la réception d'un message.
      */
-    socket.on('newMessage', (msg, userInfos, UID) => {
-        let date = new Date();
-        let h = date.getHours().toString();
-        let m = date.getMinutes().toString();
+    socket.on('newMessage', (msg, userInfos, UID, messageTime) => {
 
         var message = $(`<div class="message" id="#user-${UID}">
             <div class="icon">
@@ -186,14 +175,13 @@ $(() => {
             <div class="message-infos">
                 <div class="user-info">
                     <span class="msg-user">${userInfos[0]}</span>
-                    <span>${h}:${m}</span>
+                    <span>${messageTime}</span>
                 </div>
                 <p class="message-text">${msg}</p>
             </div>
         </div>`);
 
         if ($('.message').first().attr('id') == `#user-${UID}`) {
-            console.log("osamer");
             let actualText = $('.message').first().children('.message-infos').children('p').html();
             $('.message').first().children('.message-infos').children('p').html(`${actualText}</br>${msg}`);
         } else {
