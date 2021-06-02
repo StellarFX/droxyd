@@ -20,7 +20,6 @@ body {
   font-family: 'Segoe UI';
   display: flex;
   flex-direction: column;
-  /*overflow: hidden; REMOVE WHEN PROD*/
   height: 100vh;
 }
 
@@ -101,7 +100,6 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  /*-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);*/
   background-color: #242527;
 }
 
@@ -151,6 +149,8 @@ body {
   display: flex;
   flex-direction: column-reverse;
   overflow: auto;
+  overflow-x: hidden;
+  max-width: calc(100% - 15%);
 }
 
 .main-container .tchat .message {
@@ -172,6 +172,8 @@ body {
 
 .main-container .tchat .message .message-infos {
   margin-left: 15px;
+  box-sizing: border-box;
+  max-width: 100%;
 }
 
 .main-container .tchat .message .message-infos p {
@@ -179,6 +181,9 @@ body {
   font-weight: 100;
   font-size: 12pt;
   margin: 5px 0;
+  max-width: 100%;
+  white-space: normal;
+  word-break: break-word;
 }
 
 .main-container .tchat .message .message-infos .user-info {
@@ -216,6 +221,7 @@ body {
 .userbar {
   width: 100%;
   height: 100px;
+  min-height: 100px;
   display: flex;
   background-color: var(--background-1);
 }

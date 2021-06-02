@@ -27,7 +27,7 @@ function spanReset(e) {
     if (id == "group-name") {
 
         if (e.value == "") txt = "Groupe sans nom";
-        socket.emit('titleChange', { data: txt });
+        socket.emit('titleChange', txt);
 
     } else if (id == "username") {
 
@@ -59,6 +59,12 @@ function loadCustomMessage(message) {
     return message;
 }
 
+/**
+ * Met en forme et renvoi le nouveau message type "notification".
+ * @param {Object.<String, String>} infos Les informations à mettre en forme
+ * @param {String} type Le type de la notification ("join" / "leave" / "rename-user" / "rename-group")
+ * @returns {JQuery<HTMLElement>} La notification mise en forme
+ */
 function newCustomEvent(infos, type) {
     if (type == 'join') {
         return $(`<div class="message notification" id="join"> <div class="icon"> <i class="fas fa-arrow-right" aria-hidden="true"></i></div> <div class="message-infos"> <p class="message-text"><b>${infos["joined"]}</b> a rejoint la conversation.</p> </div> </div>`)
@@ -70,6 +76,7 @@ function newCustomEvent(infos, type) {
         return $(`<div class="message notification" id="rename-group"> <div class="icon"> <i class="fas fa-edit" aria-hidden="true"></i> </div> <div class="message-infos"> <p class="message-text"><b>${infos["user"]}</b> a renommé la conversation en <b>${infos["newName"]}</b>.</p> </div> </div>`);
     }
 }
+
 
 $(() => {
 
@@ -83,7 +90,7 @@ $(() => {
     })
 
     /**
-     * Lorsque l'utilisateur appuit sur entrée lors d'un changement d'utilisateur.
+     * Lorsque l'utilisateur appuit sur entrée lors d'un changement de nom d'utilisateur.
      */
     $(document).on('keyup', '#username', (e) => {
         if (e.key == 'Enter') {
@@ -211,7 +218,6 @@ $(() => {
                 $('.message').first().children('.message-infos').children('p').html(`${actualText}</br>${messages[i][0]}`);
             } else {
                 $(".tchat").prepend(msgHistory[i]);
-                //$(`.message .icon`).first().css('background-color', `hsl(${messages[i][3]},100%,72%)`);
             }
         }
     })

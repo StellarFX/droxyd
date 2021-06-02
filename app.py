@@ -58,14 +58,24 @@ def userDisconnect():
 
 @socketio.on('titleChange')
 def titleChange(name):
+    """Se déclenche lorsque l'utilisateur change le nom du groupe.
+
+    Args:
+        name (String): Le nom du groupe
+    """
     global title
     title = name
     emit('changeTitle', title, broadcast=True)
-    emit('new-notification', ('rename-group', {"user": sessionHandler.getUsername(), "newName": name['data']}), broadcast=True)
-    messages.append(('rename-group', {"user": sessionHandler.getUsername(), "newName": name['data']}))
+    emit('new-notification', ('rename-group', {"user": sessionHandler.getUsername(), "newName": name}), broadcast=True)
+    messages.append(('rename-group', {"user": sessionHandler.getUsername(), "newName": name}))
 
 @socketio.on('usernameChange')
 def changeUsername(name):
+    """Se déclenche lorsque l'utilisateur change son nom d'utilisateur.
+
+    Args:
+        name (String): Le nouveau nom d'utilisateur
+    """
     namebefore = sessionHandler.getUsername()
     sessionHandler.setUsername(name)
     userList[sessionHandler.getUID()] = [name, sessionHandler.getUniqueColor()]
@@ -77,6 +87,11 @@ messages = []
 
 @socketio.on('message')
 def handleMessage(msg):
+    """Se déclenche lors de l'envoi d'un nouveau message.
+
+    Args:
+        msg (String): Le message envoyé.
+    """
     messageTime = strftime('%H:%M', localtime())
     messages.append((msg, sessionHandler.getUID(), userList[sessionHandler.getUID()][0], userList[sessionHandler.getUID()][1], messageTime))
     emit('newMessage', (msg, userList[sessionHandler.getUID()], sessionHandler.getUID(), messageTime), broadcast=True)
