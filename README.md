@@ -1,5 +1,6 @@
 <div align="center">
   <img src="https://i.ibb.co/x7kSxxS/LOGODROXYD.png" width="15%">
+  <br>
 </div>
 <div align="center">
   <a href="https://forthebadge.com"><img src="https://forthebadge.com/images/badges/made-with-python.svg"></a>
