@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  {% include "elements/head.html" %}
+</head>
+
+<body>
+  <div id="connectlist">
+  </div>
+  <div class="navbar">
+    <div class="title-container">
+      <img src="{{ url_for('static', filename = 'assets/images/logo.jpg') }}">
+      <p>Droxyd</p>
+    </div>
+    <div class="name-container">
+      <p onclick="spanSwitch(this, 'group-name');" id="group-name">Nouveau groupe</p>
+    </div>
+  </div>
+  <div class="main-container">
+    <div class="userlist-container">
+      <span class="secondary">Liste des utilisateurs :</span>
+      <!-- USER LIST -->
+    </div>
+    <div class="tchat">
+      <!-- MSG LIST -->
+    </div>
+  </div>
+  <div class="userbar">
+    <div class="userinfo">
+      <div class="icon"><i class="fas fa-user"></i></div>
+      <p onclick='spanSwitch(this)' id="username">User</p>
+    </div>
+    <div class="messagebar">
+      <div class="userinput">
+        <input type="text" id="user-input" placeholder="Écrivez un message">
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

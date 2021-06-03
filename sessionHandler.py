@@ -4,6 +4,7 @@ from random import randrange
 
 app.secret_key = '&DePv5].:<UuPKW)'
 
+
 def setUsername(username='User '):
     """Change le nom d'utilisateur de la personne qui effectue la requête.
 
@@ -18,7 +19,10 @@ def setUsername(username='User '):
     else:
         session['username'] = username
 
+
 uColors = []
+
+
 def setUniqueColor():
     """Applique une couleur unique pour l'utilisateur (HSL)
 
@@ -33,6 +37,7 @@ def setUniqueColor():
         uColors.append(uniqueColor)
         session['uniqueColor'] = uniqueColor
 
+
 def getUniqueColor():
     """Récupère la couleur unique de l'utilisateur (HSL)
 
@@ -41,7 +46,9 @@ def getUniqueColor():
     """
     return session['uniqueColor']
 
+
 ids = 0
+
 
 def setUID():
     """Applique un ID utilisateur unique
@@ -53,6 +60,7 @@ def setUID():
     session['id'] = ids
     ids += 1
 
+
 def getUID():
     """Récupère l'ID utilisateur
 
@@ -61,10 +69,10 @@ def getUID():
     """
     return session['id']
 
+
 def getUsername():
     """Récupère le nom d'utilisateur de la personne qui effectue la requête.
 
     :return: Le nom d'utilisateur (string)
-    """ 
+    """
     return session['username']
-

@@ -1,3 +1,4 @@
+import sessionHandler
 from email import message
 from flask import Flask, render_template
 from flask.globals import session
@@ -8,19 +9,22 @@ from time import strftime, localtime
 app = Flask(__name__)
 socketio = SocketIO(app)
 
-import sessionHandler
 
 title = {"data": "Nouveau groupe"}
 
+
 @app.route('/')
 def setupPage():
-    return render_template('login.html')
+    return render_template('main.html')
+
 
 @socketio.on('name')
 def nameHandler(json):
     print(json)
 
+
 userList = {}
+
 
 @socketio.on('connect')
 def userConnect():
@@ -32,15 +36,19 @@ def userConnect():
     sessionHandler.setUID()
     sessionHandler.setUsername()
     sessionHandler.setUniqueColor()
-    userList[sessionHandler.getUID()] = [sessionHandler.getUsername(), sessionHandler.getUniqueColor()]
-    emit('userConnect', (sessionHandler.getUID(), sessionHandler.getUsername(), sessionHandler.getUniqueColor()), include_self=False, broadcast=True)
+    userList[sessionHandler.getUID()] = [sessionHandler.getUsername(),
+                                         sessionHandler.getUniqueColor()]
+    emit('userConnect', (sessionHandler.getUID(), sessionHandler.getUsername(
+    ), sessionHandler.getUniqueColor()), include_self=False, broadcast=True)
     emit('changeTitle', title)
     emit('changeUserInfos', userList[sessionHandler.getUID()])
     emit('loadUsers', (userList, sessionHandler.getUID()))
     emit('loadMessages', messages)
 
-    emit('new-notification', ('join', {"joined": sessionHandler.getUsername()}), broadcast=True)
+    emit('new-notification',
+         ('join', {"joined": sessionHandler.getUsername()}), broadcast=True)
     messages.append(('join', {"joined": sessionHandler.getUsername()}))
+
 
 @socketio.on('disconnect')
 def userDisconnect():
@@ -50,11 +58,13 @@ def userDisconnect():
     """
     userList.pop(session['id'])
 
-    emit('new-notification', ('leave', {"left": sessionHandler.getUsername()}), broadcast=True)
+    emit('new-notification',
+         ('leave', {"left": sessionHandler.getUsername()}), broadcast=True)
     emit('userDisconnect', sessionHandler.getUID(), broadcast=True)
     messages.append(('leave', {"left": sessionHandler.getUsername()}))
 
 # CUSTOM EVENTS
+
 
 @socketio.on('titleChange')
 def titleChange(name):
@@ -66,8 +76,11 @@ def titleChange(name):
     global title
     title = name
     emit('changeTitle', title, broadcast=True)
-    emit('new-notification', ('rename-group', {"user": sessionHandler.getUsername(), "newName": name}), broadcast=True)
-    messages.append(('rename-group', {"user": sessionHandler.getUsername(), "newName": name}))
+    emit('new-notification', ('rename-group',
+         {"user": sessionHandler.getUsername(), "newName": name}), broadcast=True)
+    messages.append(
+        ('rename-group', {"user": sessionHandler.getUsername(), "newName": name}))
+
 
 @socketio.on('usernameChange')
 def changeUsername(name):
@@ -79,11 +92,16 @@ def changeUsername(name):
     namebefore = sessionHandler.getUsername()
     sessionHandler.setUsername(name)
     userList[sessionHandler.getUID()] = [name, sessionHandler.getUniqueColor()]
-    emit('changeUsername', (name, sessionHandler.getUID()), include_self=False, broadcast=True)
-    emit('new-notification', ('rename-user', {"namebefore": namebefore, "nameafter": sessionHandler.getUsername()}), broadcast=True)
-    messages.append(('rename-user', {"namebefore": namebefore, "nameafter": sessionHandler.getUsername()}))
+    emit('changeUsername', (name, sessionHandler.getUID()),
+         include_self=False, broadcast=True)
+    emit('new-notification', ('rename-user',
+         {"namebefore": namebefore, "nameafter": sessionHandler.getUsername()}), broadcast=True)
+    messages.append(
+        ('rename-user', {"namebefore": namebefore, "nameafter": sessionHandler.getUsername()}))
+
 
 messages = []
+
 
 @socketio.on('message')
 def handleMessage(msg):
@@ -93,8 +111,11 @@ def handleMessage(msg):
         msg (String): Le message envoyé.
     """
     messageTime = strftime('%H:%M', localtime())
-    messages.append((msg, sessionHandler.getUID(), userList[sessionHandler.getUID()][0], userList[sessionHandler.getUID()][1], messageTime))
-    emit('newMessage', (msg, userList[sessionHandler.getUID()], sessionHandler.getUID(), messageTime), broadcast=True)
+    messages.append((msg, sessionHandler.getUID(), userList[sessionHandler.getUID(
+    )][0], userList[sessionHandler.getUID()][1], messageTime))
+    emit('newMessage', (msg, userList[sessionHandler.getUID(
+    )], sessionHandler.getUID(), messageTime), broadcast=True)
+
 
 if __name__ == "__main__":
     socketio.run(app)
