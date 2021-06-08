@@ -14,7 +14,7 @@ function spanSwitch(e) {
   let id = $(e).attr("id");
 
   $(e).replaceWith(
-    `<input id="${id}" onblur='spanReset(this)' value='${txt}' />`
+    `<input id="${id}" onblur='spanReset(this)' maxlength="36" value='${txt}' />`
   );
   $(`#${id}`).trigger("focus");
 }
@@ -150,6 +150,7 @@ $(() => {
       if (key == UID) {
         continue;
       } else {
+        value[0] = value[0].replace(/</g, "&lt;").replace(/>/g, "&gt;");
         var user = $(
           `<div class="user" id="user-${key}"><div class="icon"><i class="fas fa-user"></i></div><p>${value[0]}</p></div>`
         );
@@ -209,6 +210,7 @@ $(() => {
    */
   socket.on("newMessage", (msg, userInfos, UID, messageTime) => {
     msg = msg.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    userInfos[0] = userInfos[0].replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
     var message = $(`<div class="message" id="#user-${UID}">
             <div class="icon">
