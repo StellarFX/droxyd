@@ -32,6 +32,9 @@ function spanReset(e) {
   } else if (id == "username") {
     if (e.value == "") txt = "User";
     socket.emit("usernameChange", txt);
+    
+    txt = txt.replace(/</g, "&lt;").replace(/>/g, "&gt;"); 
+
     $(e).replaceWith(`<p onclick="spanSwitch(this)" id="username">${txt}</p>`);
   }
 }
@@ -42,6 +45,8 @@ function spanReset(e) {
  * @returns {JQuery<HTMLElement>}
  */
 function loadCustomMessage(message) {
+  message[0] = message[0].replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
   var message = $(`<div class="message" id="#user-${message[1]}">
         <div class="icon" style="background-color: ${message[3]}">
             <i class="fas fa-user"></i>
@@ -66,18 +71,24 @@ function loadCustomMessage(message) {
  */
 function newCustomEvent(infos, type) {
   if (type == "join") {
+    infos["joined"] = infos["joined"].replace(/</g, "&lt;").replace(/>/g, "&gt;");
     return $(
       `<div class="message notification" id="join"> <div class="icon"> <i class="fas fa-arrow-right" aria-hidden="true"></i></div> <div class="message-infos"> <p class="message-text"><b>${infos["joined"]}</b> a rejoint la conversation.</p> </div> </div>`
     );
   } else if (type == "leave") {
+    infos["left"] = infos["left"].replace(/</g, "&lt;").replace(/>/g, "&gt;");
     return $(
       `<div class="message notification" id="leave"> <div class="icon"> <i class="fas fa-arrow-left" aria-hidden="true"></i> </div> <div class="message-infos"> <p class="message-text"><b>${infos["left"]}</b> a quitté la conversation.</p> </div> </div>`
     );
   } else if (type == "rename-user") {
+    infos["namebefore"] = infos["namebefore"].replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    infos["nameafter"] = infos["nameafter"].replace(/</g, "&lt;").replace(/>/g, "&gt;");
     return $(
       `<div class="message notification" id="rename-user"> <div class="icon"> <i class="fas fa-user-edit" aria-hidden="true"></i> </div> <div class="message-infos"> <p class="message-text"><b>${infos["namebefore"]}</b> s'est renommé en <b>${infos["nameafter"]}</b>.</p> </div> </div>`
     );
   } else if (type == "rename-group") {
+    infos["user"] = infos["user"].replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    infos["newName"] = infos["newName"].replace(/</g, "&lt;").replace(/>/g, "&gt;");
     return $(
       `<div class="message notification" id="rename-group"> <div class="icon"> <i class="fas fa-edit" aria-hidden="true"></i> </div> <div class="message-infos"> <p class="message-text"><b>${infos["user"]}</b> a renommé la conversation en <b>${infos["newName"]}</b>.</p> </div> </div>`
     );
@@ -164,14 +175,19 @@ $(() => {
   socket.on("changeTitle", (name) => {
     let element = $(".name-container");
 
-    element[0].innerHTML = `<p id="group-name" onclick='spanSwitch(this)'> ${name["data"]} </span>`;
+    name = name.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+
+    element[0].innerHTML = `<p id="group-name" onclick='spanSwitch(this)'> ${name} </span>`;
   });
 
   /**
    * Charge le nom d'utilisateur depuis le serveur.
    */
   socket.on("changeUsername", (name, id) => {
-    $(`#user-${id}`).children("p").text(name);
+    name = name.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+    $(`#user-${id}`).children("p").text(name);    
   });
 
   /**
@@ -182,6 +198,9 @@ $(() => {
       "background-color",
       `hsl(${userInfos[1]},100%,72%)`
     );
+
+    userInfos[0] = userInfos[0].replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
     $(".userinfo").children("p").text(userInfos[0]);
   });
 
@@ -189,6 +208,8 @@ $(() => {
    * S'active lors de la réception d'un message.
    */
   socket.on("newMessage", (msg, userInfos, UID, messageTime) => {
+    msg = msg.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
     var message = $(`<div class="message" id="#user-${UID}">
             <div class="icon">
                 <i class="fas fa-user"></i>
@@ -201,17 +222,18 @@ $(() => {
                 <p class="message-text">${msg}</p>
             </div>
         </div>`);
+    
 
     if ($(".message").first().attr("id") == `#user-${UID}`) {
       let actualText = $(".message")
         .first()
         .children(".message-infos")
-        .children("p")
+        .children("p").first()
         .html();
       $(".message")
         .first()
         .children(".message-infos")
-        .children("p")
+        .children("p").first()
         .html(`${actualText}</br>${msg}`);
     } else {
       $(".tchat").prepend(message);

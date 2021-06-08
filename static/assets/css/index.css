@@ -21,6 +21,7 @@ body {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  overflow: hidden;
 }
 
 .navbar {
@@ -53,6 +54,8 @@ body {
   display: flex;
   align-items: center;
   padding-left: 40px;
+  width: 100%;
+  max-height: 100%;
 }
 
 .navbar .name-container #group-name {
@@ -64,6 +67,10 @@ body {
   border: none;
   border-left: 2px solid var(--stroke-color);
   padding: 10px 15px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 60%;
+  max-height: 20%;
 }
 
 .navbar .name-container input {

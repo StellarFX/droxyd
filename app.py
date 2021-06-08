@@ -1,16 +1,25 @@
+import os
+import markdown
+
+try:
+  from flask import Flask, render_template
+  from flask.globals import session
+  from flask_socketio import SocketIO, emit
+  from time import strftime, localtime
+except ImportError:
+  os.system('pip install flask flask-socketio eventlet')
+  from flask import Flask, render_template
+  from flask.globals import session
+  from flask_socketio import SocketIO, emit
+  from time import strftime, localtime
+
 import sessionHandler
-from email import message
-from flask import Flask, render_template
-from flask.globals import session
-from flask_socketio import SocketIO, emit
-from colorsys import hls_to_rgb
-from time import strftime, localtime
 
 app = Flask(__name__)
 socketio = SocketIO(app)
 
 
-title = {"data": "Nouveau groupe"}
+title = "Nouveau groupe"
 
 
 @app.route('/')
@@ -110,6 +119,12 @@ def handleMessage(msg):
     Args:
         msg (String): Le message envoyé.
     """
+    '''if('*' in msg):
+      mdMsg = markdown.markdown(msg) # (TODO : MARKDOWN)
+      mdMsg.replace('<p>', '')
+      mdMsg.replace('</p>', '')
+    else:
+      mdMsg = msg'''''
     messageTime = strftime('%H:%M', localtime())
     messages.append((msg, sessionHandler.getUID(), userList[sessionHandler.getUID(
     )][0], userList[sessionHandler.getUID()][1], messageTime))
@@ -118,4 +133,4 @@ def handleMessage(msg):
 
 
 if __name__ == "__main__":
-    socketio.run(app)
+    socketio.run(app, host='0.0.0.0', port=80)
