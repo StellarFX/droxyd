@@ -15,7 +15,7 @@
 - [À propos](#à-propos)
 - [Fonctionnalités](#fonctionnalités)
 - [Dépendances](#dépendances)
-- [Comment utiliser ?](#comment-utiliser-?)
+- [Comment utiliser ?](#comment-utiliser-)
 
 ## À propos
 
