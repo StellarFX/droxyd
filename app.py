@@ -1,5 +1,4 @@
 import os
-import markdown
 
 try:
   from flask import Flask, render_template
@@ -119,12 +118,6 @@ def handleMessage(msg):
     Args:
         msg (String): Le message envoyé.
     """
-    '''if('*' in msg):
-      mdMsg = markdown.markdown(msg) # (TODO : MARKDOWN)
-      mdMsg.replace('<p>', '')
-      mdMsg.replace('</p>', '')
-    else:
-      mdMsg = msg'''''
     messageTime = strftime('%H:%M', localtime())
     messages.append((msg, sessionHandler.getUID(), userList[sessionHandler.getUID(
     )][0], userList[sessionHandler.getUID()][1], messageTime))
