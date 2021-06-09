@@ -1,14 +1,14 @@
 import os
-import markdown
+# import markdown
 
 try:
-  from flask import Flask, render_template
+  from flask import Flask, render_template, redirect
   from flask.globals import session
   from flask_socketio import SocketIO, emit
   from time import strftime, localtime
 except ImportError:
   os.system('pip install flask flask-socketio eventlet')
-  from flask import Flask, render_template
+  from flask import Flask, render_template, redirect
   from flask.globals import session
   from flask_socketio import SocketIO, emit
   from time import strftime, localtime
@@ -18,14 +18,26 @@ import sessionHandler
 app = Flask(__name__)
 socketio = SocketIO(app)
 
+import login
 
 title = "Nouveau groupe"
 
 
 @app.route('/')
 def setupPage():
-    return render_template('main.html')
+    return redirect('/chat') 
 
+@app.route('/chat')
+def setupChatePage():
+    if(sessionHandler.getUID()):
+        return render_template('main.html')
+    else:
+        return redirect('/dev/login')
+    
+
+@app.route('/dev/login')
+def setupLoginPage():
+    return render_template('login.html')
 
 @socketio.on('name')
 def nameHandler(json):
@@ -34,17 +46,16 @@ def nameHandler(json):
 
 userList = {}
 
-
-@socketio.on('connect')
+@socketio.on('connect', '/chat')
 def userConnect():
     """Se déclenche lorsqu'un utilisateur rejoint.
 
     ``-`` Lui attribue ensuite un UID unique, un nom d'utilisateur de base, et une teinte HSL unique. 
     ``-`` Déclenche ensuite tous les événements nécessaires lorsqu'un utilisateur rejoint.
     """
-    sessionHandler.setUID()
-    sessionHandler.setUsername()
-    sessionHandler.setUniqueColor()
+    # sessionHandler.setUID()
+    # sessionHandler.setUsername()
+    # sessionHandler.setUniqueColor()
     userList[sessionHandler.getUID()] = [sessionHandler.getUsername(),
                                          sessionHandler.getUniqueColor()]
     emit('userConnect', (sessionHandler.getUID(), sessionHandler.getUsername(
@@ -59,7 +70,7 @@ def userConnect():
     messages.append(('join', {"joined": sessionHandler.getUsername()}))
 
 
-@socketio.on('disconnect')
+@socketio.on('disconnect', '/chat')
 def userDisconnect():
     """Se déclenche lorsqu'un utilisateur se déconnecte.
 
@@ -75,7 +86,7 @@ def userDisconnect():
 # CUSTOM EVENTS
 
 
-@socketio.on('titleChange')
+@socketio.on('titleChange', '/chat')
 def titleChange(name):
     """Se déclenche lorsque l'utilisateur change le nom du groupe.
 
@@ -91,7 +102,7 @@ def titleChange(name):
         ('rename-group', {"user": sessionHandler.getUsername(), "newName": name}))
 
 
-@socketio.on('usernameChange')
+@socketio.on('usernameChange', '/chat')
 def changeUsername(name):
     """Se déclenche lorsque l'utilisateur change son nom d'utilisateur.
 
@@ -112,7 +123,7 @@ def changeUsername(name):
 messages = []
 
 
-@socketio.on('message')
+@socketio.on('message', '/chat')
 def handleMessage(msg):
     """Se déclenche lors de l'envoi d'un nouveau message.
 
@@ -133,4 +144,4 @@ def handleMessage(msg):
 
 
 if __name__ == "__main__":
-    socketio.run(app, host='0.0.0.0', port=80)
+    socketio.run(app)
