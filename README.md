@@ -15,6 +15,7 @@
 - [À propos](#à-propos)
 - [Fonctionnalités](#fonctionnalités)
 - [Dépendances](#dépendances)
+- [Comment utiliser ?](#comment-utiliser-?)
 
 ## À propos
 
@@ -32,3 +33,7 @@ Droxyd est une messagerie instantanée développée sous Flask et basée sur "so
 - [Flask](https://pypi.org/project/Flask/)
 - [Flask-SocketIO](https://pypi.org/project/Flask-SocketIO/)
 - [eventlet](https://pypi.org/project/eventlet/)
+
+## Comment utiliser ?
+
+De base, le serveur se lance sur le port 80 sur [localhost](http://localhost). En revanche, vous pouvez éditer ces ports en modifiant la dernière ligne du fichier `app.py`.
