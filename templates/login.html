@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    {% include "elements/head.html" %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'assets/css/login.css') }}" />
+</head>
+
+<body>
+    <div class="main-container">
+        <div class="left-part">
+            <h1>Bienvenue sur Droxyd !</h1>
+            <p>
+                Droxyd est une messagerie instantanée développée sous Flask et basée
+                sur "socket.io". C'est une application facile d'utilisation, légère et
+                fonctionnelle.
+            </p>
+            <a href="/about">
+                <div class="button-stroke">En savoir plus</div>
+            </a>
+        </div>
+        <div class="right-part">
+            <h1>Connexion</h1>
+            <form>
+                <div class="input">
+                    <input type="text" name="username" id="username" placeholder="Nom d'utilisateur..." />
+                </div>
+                <div class="input">
+                    <span>#</span>
+                    <input type="text" name="room" id="room" placeholder="Code de la salle..." />
+                </div>
+                <input type="submit" value="Se connecter" class="button-fill" />
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -17,6 +17,9 @@ title = {"data": "Nouveau groupe"}
 def setupPage():
     return render_template('main.html')
 
+@app.route('/dev/login')
+def renderPage():
+    return render_template('login.html')
 
 @socketio.on('name')
 def nameHandler(json):

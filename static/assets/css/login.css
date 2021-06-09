@@ -1,0 +1,177 @@
+:root {
+  --background-1: #161719;
+  --background-2: #1f2022;
+  --background-3: #2d2e31;
+  --background-msg-usr: #292a2d;
+  --main-color: #983aef;
+  --stroke-color: #42444b;
+  --true: #7aff70;
+  --false: #ff7073;
+  --neutral: #767779;
+}
+
+body {
+  margin: 0;
+  background-image: url("../images/login-bg.png");
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  font-family: "Segoe UI";
+  color: white;
+  background-position: center;
+  animation: pulse 10s infinite;
+}
+
+.button-fill {
+  color: white;
+  background-color: #983aef;
+  border: none;
+  outline: none;
+  padding: 15px 25px;
+  border-radius: 50px;
+  font-family: "Segoe UI";
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.button-stroke {
+  color: white;
+  border: 1px solid white;
+  width: fit-content;
+  outline: none;
+  padding: 15px 25px;
+  border-radius: 50px;
+  font-family: "Segoe UI";
+  font-weight: 600;
+  font-size: 14px;
+}
+
+a {
+  text-decoration: none;
+  color: unset;
+  width: fit-content;
+}
+
+.main-container {
+  display: flex;
+  width: 45%;
+  box-sizing: border-box;
+  min-height: 47vh;
+  height: max-content;
+}
+
+.main-container h1 {
+  font-size: 26px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  position: relative;
+}
+
+.main-container .left-part {
+  background-color: var(--main-color);
+  width: 50%;
+  box-sizing: border-box;
+  padding: 60px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: left;
+  border-radius: 20px 0 0 20px;
+}
+
+.main-container .left-part p {
+  width: 80%;
+  margin: 30px 0;
+}
+
+.main-container .left-part h1::after {
+  content: "";
+  position: absolute;
+  width: 30%;
+  bottom: -10px;
+  left: 0;
+  height: 2px;
+  background-color: white;
+}
+
+.main-container .right-part {
+  background-color: var(--background-2);
+  width: 50%;
+  box-sizing: border-box;
+  padding: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 0 20px 20px 0;
+  display: flex;
+}
+
+.main-container .right-part h1::after {
+  content: "";
+  position: absolute;
+  width: 40%;
+  bottom: -10px;
+  left: 30%;
+  text-align: center;
+  height: 2px;
+  background-color: white;
+}
+
+.main-container .right-part form {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 80%;
+  justify-content: space-between;
+  height: 100%;
+  position: relative;
+  padding-top: 25px;
+}
+
+.main-container .right-part form input[type=] {
+  position: absolute;
+  bottom: 0;
+}
+
+.main-container .right-part form .input {
+  display: flex;
+  border-bottom: 2px solid var(--neutral);
+  width: 100%;
+  padding: 10px 0;
+  justify-content: center;
+}
+
+.main-container .right-part form .input span {
+  font-family: "Montserrat";
+  font-size: 24px;
+  color: var(--neutral);
+  padding-right: 5px;
+}
+
+.main-container .right-part form .input input {
+  background-color: unset;
+  outline: none;
+  border: none;
+  width: 90%;
+  font-size: 14px;
+  color: white;
+  font-family: "Segoe UI";
+}
+
+.main-container .right-part form .input input::placeholder {
+  color: var(--stroke-color);
+}
+
+@keyframes pulse {
+  0% {
+    background-size: 100%;
+  }
+  50% {
+    background-size: 105%;
+  }
+  100% {
+    background-size: 100%;
+  }
+}
