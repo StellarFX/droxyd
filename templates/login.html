@@ -4,6 +4,7 @@
 <head>
     {% include "elements/head.html" %}
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'assets/css/login.css') }}" />
+    <script type="text/javascript" src="{{ url_for('static', filename = 'assets/scripts/login.js') }}"></script>
 </head>
 
 <body>
@@ -21,15 +22,22 @@
         </div>
         <div class="right-part">
             <h1>Connexion</h1>
-            <form>
-                <div class="input">
+            <form id="login-form" action="/connect" method="POST" autocomplete="off">
+                <div class="input" id="usernameInput">
                     <input type="text" name="username" id="username" placeholder="Nom d'utilisateur..." />
+                    <span class="error" id="usernameError">Veuillez entrer un nom d'utilisateur à 4 caractères ou
+                    plus.</span>
                 </div>
-                <div class="input">
+                <div class="input" id="roomInput">
                     <span>#</span>
                     <input type="text" name="room" id="room" placeholder="Code de la salle..." />
+                    <span class="error" id="roomError">Le code de la salle est invalide.</span>
                 </div>
-                <input type="submit" value="Se connecter" id="submit" class="button-fill" />
+
+                <div class="buttons">
+                    <input type="submit" value="Se connecter" id="connect" class="button-fill" />
+                    <input type="submit" value="Créer une salle" id="create" class="button-stroke" />
+                </div>
             </form>
         </div>
     </div>

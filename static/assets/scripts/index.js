@@ -1,5 +1,20 @@
 var socket = io();
 
+function $_GET(param) {
+	var vars = {};
+	window.location.href.replace( location.hash, '' ).replace( 
+		/[?&]+([^=&]+)=?([^&]*)?/gi, // regexp
+		function( m, key, value ) { // callback
+			vars[key] = value !== undefined ? value : '';
+		}
+	);
+
+	if ( param ) {
+		return vars[param] ? vars[param] : null;	
+	}
+	return vars;
+}
+
 /**
  * L'historique des messages
  */
@@ -35,6 +50,10 @@ function spanReset(e) {
     
     txt = txt.replace(/</g, "&lt;").replace(/>/g, "&gt;"); 
 
+    let expirationDate = new Date(Date.now + 3600000); // Date d'expiration du cookie
+
+    document.cookie = `username=${txt}; path=/; expires=${expirationDate}`;
+
     $(e).replaceWith(`<p onclick="spanSwitch(this)" id="username">${txt}</p>`);
   }
 }
@@ -45,18 +64,18 @@ function spanReset(e) {
  * @returns {JQuery<HTMLElement>}
  */
 function loadCustomMessage(message) {
-  message[0] = message[0].replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  message[1] = message[1].replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
-  var message = $(`<div class="message" id="#user-${message[1]}">
-        <div class="icon" style="background-color: ${message[3]}">
+  var message = $(`<div class="message" id="#user-${message[2]}">
+        <div class="icon" style="background-color: ${message[4]}">
             <i class="fas fa-user"></i>
         </div>
         <div class="message-infos">
             <div class="user-info">
-                <span class="msg-user">${message[2]}</span>
-                <span>${message[4]}</span>
+                <span class="msg-user">${message[3]}</span>
+                <span>${message[5]}</span>
             </div>
-            <p class="message-text">${message[0]}</p>
+            <p class="message-text">${message[1]}</p>
         </div>
     </div>`);
 
@@ -147,6 +166,9 @@ $(() => {
    */
   socket.on("loadUsers", (userList, UID) => {
     for (const [key, value] of Object.entries(userList)) {
+      if(value[2] != $_GET('id')) {
+        continue;
+      }
       if (key == UID) {
         continue;
       } else {
@@ -187,6 +209,10 @@ $(() => {
    */
   socket.on("changeUsername", (name, id) => {
     name = name.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+    let expirationDate = new Date(Date.now + 3600000); // Date d'expiration du cookie : 1h (3600000ms)
+
+    expirationDate = expirationDate.toUTCString();
 
     $(`#user-${id}`).children("p").text(name);    
   });
@@ -249,20 +275,24 @@ $(() => {
    * Charge l'historique des messages lorsqu'un utilisateur rejoint.
    */
   socket.on("loadMessages", (messages) => {
+    if(messages == undefined) return;
     for (i = 0; i < messages.length; i++) {
-      if (messages[i].length == 2) {
-        let notifToPrepend = newCustomEvent(messages[i][1], messages[i][0]);
+      if(messages[i][0] != $_GET("id")) {
+        continue;
+      }
+      if (messages[i].length == 3) {
+        let notifToPrepend = newCustomEvent(messages[i][2], messages[i][1]);
         msgHistory.push(notifToPrepend);
       } else {
         let msgToPrepend = loadCustomMessage(messages[i]);
         msgToPrepend
           .children(".icon")
-          .css("background-color", `hsl(${messages[i][3]},100%,72%)`);
+          .css("background-color", `hsl(${messages[i][4]},100%,72%)`);
         msgHistory.push(msgToPrepend);
       }
     }
     for (i = 0; i < msgHistory.length; i++) {
-      if ($(".message").first().attr("id") == `#user-${messages[i][1]}`) {
+      if ($(".message").first().attr("id") == `#user-${messages[i][2]}`) {
         let actualText = $(".message")
           .first()
           .children(".message-infos")
@@ -272,7 +302,7 @@ $(() => {
           .first()
           .children(".message-infos")
           .children("p")
-          .html(`${actualText}</br>${messages[i][0]}`);
+          .html(`${actualText}</br>${messages[i][1]}`);
       } else {
         $(".tchat").prepend(msgHistory[i]);
       }

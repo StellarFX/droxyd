@@ -5,7 +5,7 @@ from random import randrange
 app.secret_key = '&DePv5].:<UuPKW)'
 
 
-def setUsername(username='User '):
+def setUsername(username=None):
     """Change le nom d'utilisateur de la personne qui effectue la requête.
 
     Parameters:
@@ -14,10 +14,10 @@ def setUsername(username='User '):
     Returns:
         None
     """
-    if(username == 'User '):
-        session['username'] = username + str(int(getUID()))
-    else:
-        session['username'] = username
+    #if(username == 'User '):
+    #    session['username'] = username + str(int(getUID()))
+    #else:
+    session['username'] = username
 
 
 uColors = []
@@ -76,3 +76,9 @@ def getUsername():
     :return: Le nom d'utilisateur (string)
     """
     return session['username']
+
+def setRoom(room):
+    session["room"] = room
+
+def getRoom():
+    return session["room"]

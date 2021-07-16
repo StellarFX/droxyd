@@ -1,20 +1,9 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    {% include "elements/head.html" %}
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="{{ url_for('static', filename = 'assets/css/index.css') }}"
-    />
-    <script
-      type="text/javascript"
-      src="{{ url_for('static', filename = 'assets/scripts/index.js') }}"
-    ></script>
-  </head>
 
 <head>
   {% include "elements/head.html" %}
+  <script type="text/javascript" src="{{ url_for('static', filename = 'assets/scripts/index.js') }}"></script>
 </head>
 
 <body>
@@ -37,25 +26,18 @@
     <div class="tchat">
       <!-- MSG LIST -->
     </div>
-    <div class="main-container">
-      <div class="userlist-container">
-        <span class="secondary">Liste des utilisateurs :</span>
-        <!-- USER LIST -->
-      </div>
-      <div class="tchat">
-        <!-- MSG LIST -->
+  </div>
+  <div class="userbar">
+    <div class="userinfo">
+      <div class="icon"><i class="fas fa-user"></i></div>
+      <p onclick='spanSwitch(this)' id="username">User</p>
+    </div>
+    <div class="messagebar">
+      <div class="userinput">
+        <input type="text" id="user-input" placeholder="Écrivez un message">
       </div>
     </div>
-    <div class="userbar">
-      <div class="userinfo">
-        <div class="icon"><i class="fas fa-user"></i></div>
-        <p onclick="spanSwitch(this)" id="username">User</p>
-      </div>
-      <div class="messagebar">
-        <div class="userinput">
-          <input type="text" id="user-input" placeholder="Écrivez un message" />
-        </div>
-      </div>
-    </div>
-  </body>
+  </div>
+</body>
+
 </html>
