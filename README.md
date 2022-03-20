@@ -23,9 +23,10 @@ Droxyd est une messagerie instantanée développée sous Flask et basée sur "so
 
 ## Fonctionnalités
 
-- Envoi de message
+- Envoi de messages
 - Changement de nom d'utilisateur
 - Changement de nom de groupe
+- Différents groupes accessible via code
 - Message d'événements (Connexion, déconnexion, changement de nom d'utilisateur, changement de nom de groupe).
 
 ## Dépendances
